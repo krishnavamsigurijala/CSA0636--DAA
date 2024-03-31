@@ -1,0 +1,71 @@
+#include <stdio.h>
+#include <limits.h>
+
+#define MAX_SIZE 10
+
+int min(int a, int b) {
+    return (a < b) ? a : b;
+}
+
+void assign(int n, int cost[MAX_SIZE][MAX_SIZE], int assigned[MAX_SIZE]) {
+    int i, j, k, minCost, minCol;
+    int totalCost = 0;
+
+    for (i = 0; i < n; i++) {
+        minCost = INT_MAX;
+        minCol = -1;
+        for (j = 0; j < n; j++) {
+            if (!assigned[j] && cost[i][j] < minCost) {
+                minCost = cost[i][j];
+                minCol = j;
+            }
+        }
+        totalCost += minCost;
+        assigned[minCol] = 1;
+    }
+
+    printf("Minimum Total Cost: %d\n", totalCost);
+}
+
+int main() {
+    int n, i, j;
+    int cost[MAX_SIZE][MAX_SIZE];
+    int assigned[MAX_SIZE] = {0};
+
+    printf("Enter the number of workers/jobs (max 10): ");
+    scanf("%d", &n);
+
+    printf("Enter the cost matrix (%dx%d):\n", n, n);
+    for (i = 0; i < n; i++) {
+        for (j = 0; j < n; j++) {
+            scanf("%d", &cost[i][j]);
+        }
+    }
+
+    printf("Cost Matrix:\n");
+    for (i = 0; i < n; i++) {
+        for (j = 0; j < n; j++) {
+            printf("%d ", cost[i][j]);
+        }
+        printf("\n");
+    }
+
+    assign(n, cost, assigned);
+
+    return 0;
+}
+/*output:
+Enter the number of workers/jobs (max 10): 3
+Enter the cost matrix (3x3):
+1 2 3
+4 5 6
+7 8 9
+Cost Matrix:
+1 2 3
+4 5 6
+7 8 9
+Minimum Total Cost: 15
+
+--------------------------------
+Process exited after 11.17 seconds with return value 0
+Press any key to continue . . .*/

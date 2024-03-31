@@ -1,0 +1,19 @@
+#include <stdio.h>
+int main() {
+    int num, remainder, sum = 0;
+    printf("Enter a number: ");
+    scanf("%d", &num);
+    while (num != 0) {
+        remainder = num % 10;
+        sum += remainder;
+        num /= 10;           
+    }
+    printf("Sum of digits: %d\n", sum);
+}
+/*output:
+Enter a number: 1234
+Sum of digits: 10
+
+--------------------------------
+Process exited after 2.725 seconds with return value 0
+Press any key to continue . . .*/

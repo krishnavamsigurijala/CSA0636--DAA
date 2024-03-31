@@ -1,0 +1,83 @@
+#include <stdio.h>
+#define V 10 // Maximum number of vertices
+
+int graph[V][V];
+int path[V];
+
+// Function to check if the vertex v can be added at index 'pos' in the Hamiltonian path
+int isSafe(int v, int pos) {
+    if (!graph[path[pos - 1]][v])
+        return 0;
+
+    for (int i = 0; i < pos; i++)
+        if (path[i] == v)
+            return 0;
+
+    return 1;
+}
+
+// Function to print the Hamiltonian path
+void printPath(int n) {
+    printf("Hamiltonian Circuit: ");
+    for (int i = 0; i < n; i++)
+        printf("%d ", path[i]);
+    printf("%d", path[0]); // Print the starting vertex to complete the circuit
+    printf("\n");
+}
+
+// Function to recursively find Hamiltonian path
+int hamiltonianCircuitUtil(int n, int pos) {
+    if (pos == n) {
+        // If all vertices are included in the Hamiltonian path, check if there's an edge from the last vertex to the first
+        if (graph[path[pos - 1]][path[0]] == 1)
+            return 1;
+        else
+            return 0;
+    }
+
+    for (int v = 1; v < n; v++) {
+        if (isSafe(v, pos)) {
+            path[pos] = v;
+
+            if (hamiltonianCircuitUtil(n, pos + 1) == 1)
+                return 1;
+
+            path[pos] = -1; // Backtrack
+        }
+    }
+
+    return 0;
+}
+
+int main() {
+    int n; // Number of vertices
+
+    printf("Enter the number of vertices (maximum %d): ", V);
+    scanf("%d", &n);
+
+    printf("Enter the adjacency matrix:\n");
+    for (int i = 0; i < n; i++)
+        for (int j = 0; j < n; j++)
+            scanf("%d", &graph[i][j]);
+    path[0] = 0;
+
+    if (hamiltonianCircuitUtil(n, 1) == 0) {
+        printf("Hamiltonian Circuit does not exist\n");
+        return 0;
+    }
+
+    printPath(n);
+
+    return 0;
+}
+/*output:
+Enter the number of vertices (maximum 10): 3
+Enter the adjacency matrix:
+0 1 2
+1 0 3
+3 2 0
+Hamiltonian Circuit: 0 2 1 0
+
+--------------------------------
+Process exited after 21.96 seconds with return value 0
+Press any key to continue . . .*/

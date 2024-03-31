@@ -1,0 +1,42 @@
+#include <stdio.h>
+
+int main() {
+    int n;
+    printf("Enter the number of elements in the list: ");
+    scanf("%d", &n);
+    
+    int arr[n], i;
+    printf("Enter %d elements:\n", n);
+    for (i = 0; i < n; i++) {
+        printf("Element %d: ", i + 1);
+        scanf("%d", &arr[i]);
+    }
+    int min = arr[0], max = arr[0];
+
+    for (i = 1; i < n; i++) {
+        if (arr[i] < min)
+            min = arr[i];
+        else if (arr[i] > max)
+            max = arr[i];
+    }
+    printf("\nMinimum value in the list: %d\n", min);
+    printf("Maximum value in the list: %d\n", max);
+    
+    return 0;
+}
+/*OUTPUT:
+Enter the number of elements in the list: 6
+Enter 6 elements:
+Element 1: 6
+Element 2: 5
+Element 3: 9
+Element 4: 4
+Element 5: 3
+Element 6: 2
+
+Minimum value in the list: 2
+Maximum value in the list: 9
+
+--------------------------------
+Process exited after 13.97 seconds with return value 0
+Press any key to continue . . .*/

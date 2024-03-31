@@ -1,0 +1,57 @@
+#include<stdio.h>
+int main(){
+	int n,i,j;
+	printf("enter the size of the array:");
+	scanf("%d",&n);
+	printf("enter the elemnts:");
+	int a[n];
+	for(i=0;i<n;i++){
+		scanf("%d",&a[i]);
+	}
+	int l=0;
+	int h=n-1;
+	int m=(l+h);
+	int b[100],c[100];
+	for(i=l;i<=m;i++){
+		b[i]=a[i];
+	}
+	for(j=m+1;j<=h;j++){
+		c[j]=a[j];
+	}
+	for(i=l;i<=m-1;i++){
+		for(j=0;j<=m-i-1;j++){
+			if(b[j]>b[j+1]){
+				int t=b[j];
+				b[j]=b[j+1];
+				b[j+1]=t;
+			}
+		}
+	}
+	for(i=m+1;i<=h-1;i++){
+		for(j=0;j<=h-i-1;j++){
+			if(c[j]>c[j+1]){
+				int t=c[j];
+				c[j]=c[j+1];
+				c[j+1]=t;
+			}
+		}
+	}
+	int r[100];
+	for(i=l;i<=m;i++){
+		r[i]=b[i];
+	}
+	for(j=m+1;j<=h-1;j++){
+		r[i++]=c[j];
+	}
+	printf("sorted array:");
+	for(i=0;i<n;i++){
+		printf("%d ",r[i]);
+	}
+}
+/*OUTPUT:
+enter the size of the array:4
+enter the elemnts:9 8 7 6
+sorted array:6 7 8 9
+--------------------------------
+Process exited after 5.912 seconds with return value 0
+Press any key to continue . . .*/

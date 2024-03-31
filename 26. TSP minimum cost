@@ -1,0 +1,68 @@
+#include <stdio.h>
+#include <limits.h>
+
+#define V 10 // Maximum number of vertices in the graph
+
+// Function to find the minimum of two numbers
+int min(int a, int b) {
+    return (a < b) ? a : b;
+}
+
+// Function to find the minimum cost tour using TSP
+int tsp(int graph[][V], int mask, int pos, int n, int dp[][V]) {
+    if (mask == (1 << n) - 1) // All vertices have been visited
+        return graph[pos][0]; // Return cost of returning to source
+
+    if (dp[mask][pos] != -1) // If the subproblem has already been solved
+        return dp[mask][pos];
+
+    int ans = INT_MAX;
+
+    // Try to go to an unvisited city
+    for (int city = 0; city < n; city++) {
+        if ((mask & (1 << city)) == 0) { // If city not visited
+            int newAns = graph[pos][city] + tsp(graph, mask | (1 << city), city, n, dp);
+            ans = min(ans, newAns);
+        }
+    }
+
+    return dp[mask][pos] = ans;
+}
+
+int main() {
+    int n;
+    printf("Enter the number of vertices in the graph (maximum %d): ", V);
+    scanf("%d", &n);
+
+    int graph[V][V];
+    printf("Enter the adjacency matrix representing the weighted graph:\n");
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            scanf("%d", &graph[i][j]);
+        }
+    }
+
+    int dp[1 << V][V]; // DP table to store intermediate results
+    for (int i = 0; i < (1 << V); i++) {
+        for (int j = 0; j < V; j++) {
+            dp[i][j] = -1; // Initialize DP table with -1
+        }
+    }
+
+    int minCost = tsp(graph, 1, 0, n, dp); // Start from vertex 0
+
+    printf("Minimum cost of the traveling salesman tour: %d\n", minCost);
+
+    return 0;
+}
+/*output:
+Enter the number of vertices in the graph (maximum 10): 3
+Enter the adjacency matrix representing the weighted graph:
+0 1 2
+1 0 3
+2 3 0
+Minimum cost of the traveling salesman tour: 6
+
+--------------------------------
+Process exited after 15.25 seconds with return value 0
+Press any key to continue . . .*/

@@ -1,0 +1,35 @@
+#include <stdio.h>
+
+// Function to print the pattern recursively
+void printPattern(int n, int row) {
+    if (row > n) // Base case: Stop recursion when row exceeds n
+        return;
+
+    // Print the current row
+    for (int i = 1; i <= row; i++) {
+        printf("%d ", i);
+    }
+    printf("\n");
+
+    // Recursively call the function to print the next row
+    printPattern(n, row + 1);
+}
+
+int main() {
+    int rows;
+    printf("Enter the number of rows for the pattern: ");
+    scanf("%d", &rows);
+
+    // Print the pattern
+    printPattern(rows, 1);
+
+    return 0;
+}
+/*output:
+Enter the number of rows for the pattern: 2
+1
+1 2
+
+--------------------------------
+Process exited after 2.282 seconds with return value 0
+Press any key to continue . . .*/
